@@ -5,8 +5,17 @@
     <Match>
         <Class name="~.*Manifest\$.*"/>
     </Match>
+    <!--These tends to pop up for Gson/Jackson model classes-->
     <Match>
-        <!--These tends to pop up for Gson/Jackson model classes-->
-        <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"/>
+        <Package name="~.*\.models.*"/>
+        <Bug code="UrF"/>
+    </Match>
+    <Match>
+        <Package name="~.*\.models.*"/>
+        <Bug code="UwF"/>
+    </Match>
+    <Match>
+        <Package name="~.*\.models.*"/>
+        <Bug code="UuF"/>
     </Match>
 </FindBugsFilter>
