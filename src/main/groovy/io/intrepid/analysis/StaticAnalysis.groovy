@@ -3,6 +3,7 @@ package io.intrepid.analysis
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.internal.file.collections.SimpleFileCollection
+import org.gradle.api.plugins.PluginContainer
 import org.gradle.api.plugins.quality.*
 
 class StaticAnalysis implements Plugin<Project> {
@@ -56,7 +57,8 @@ class StaticAnalysis implements Plugin<Project> {
         findBugsExtension.toolVersion = extension.findbugsVersion
 
         // Adds a findBugs task for each build variant
-        project.android.applicationVariants.all { bt ->
+        def variants = getBuildVariants(project)
+        variants.all { bt ->
             def buildVariant = "${bt.name.capitalize()}"
             project.task("findBugs$buildVariant", type: FindBugs, dependsOn: "assemble$buildVariant") {
                 doFirst {
@@ -118,5 +120,16 @@ class StaticAnalysis implements Plugin<Project> {
         File file = new File(staticAnalysisBuildDir, fileName)
         file.text = input.text
         return file
+    }
+
+    private static def getBuildVariants(Project project) {
+        PluginContainer plugins = project.plugins
+        if (plugins.findPlugin('android')) {
+            return project.android.applicationVariants
+        } else if (plugins.findPlugin('android-library')) {
+            return project.android.libraryVariants
+        } else {
+            throw new RuntimeException("The project must use either android or android-library plugin")
+        }
     }
 }
