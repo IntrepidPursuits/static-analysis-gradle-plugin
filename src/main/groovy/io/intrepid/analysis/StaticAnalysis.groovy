@@ -75,7 +75,7 @@ class StaticAnalysis implements Plugin<Project> {
                 if (extension.findBugsClasses) {
                     classes = extension.findBugsClasses
                 } else {
-                    classes = project.files("${project.rootDir}/app/build/intermediates/classes")
+                    classes = project.files("${project.buildDir}/intermediates/classes")
                 }
                 classpath = project.files()
 

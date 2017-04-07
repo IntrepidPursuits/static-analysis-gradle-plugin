@@ -53,7 +53,7 @@ staticAnalysis {
 
     findBugsEffort          // default:  "max"
     findBugsReportLevel     // default:  "medium"
-    findBugsClasses         // default:  "${project.rootDir}/app/build/intermediates/classes"
+    findBugsClasses         // default:  files("${project.buildDir}/intermediates/classes")
     findBugsExcludeFilter
 }
 ```

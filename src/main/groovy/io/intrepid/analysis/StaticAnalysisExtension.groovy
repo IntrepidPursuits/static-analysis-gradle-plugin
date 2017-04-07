@@ -1,5 +1,7 @@
 package io.intrepid.analysis
 
+import org.gradle.api.file.FileCollection
+
 class StaticAnalysisExtension {
 
     String pmdVersion = "5.5.1"
@@ -14,5 +16,5 @@ class StaticAnalysisExtension {
     String findBugsEffort = "max"
     String findBugsReportLevel = "medium"
     String findBugsExcludeFilter
-    String findBugsClasses
+    FileCollection findBugsClasses
 }
