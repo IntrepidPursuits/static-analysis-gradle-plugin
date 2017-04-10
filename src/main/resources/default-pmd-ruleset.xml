@@ -31,6 +31,7 @@
         <!--Often time these are used for Gson/Jackson-->
         <exclude name="UncommentedEmptyConstructor"/>
     </rule>
+    <rule ref="rulesets/java/empty.xml"/>
     <rule ref="rulesets/java/finalizers.xml"/>
     <rule ref="rulesets/java/imports.xml">
         <!-- Espresso is designed this way !-->

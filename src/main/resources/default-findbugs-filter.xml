@@ -1,4 +1,7 @@
 <FindBugsFilter>
+
+    <!-- List of bug codes with explanations: http://findbugs.sourceforge.net/bugDescriptions.html -->
+
     <Match>
         <Class name="~.*R\$.*"/>
     </Match>
