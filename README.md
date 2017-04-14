@@ -6,7 +6,7 @@
 1. [License](#license)
 
 ### Overview
-The Static Analysis Gradle Plugin adds gradle tasks for running PMD and FindBugs, and includes a default configuration that is common to most Intrepid Android projects.
+The Static Analysis Gradle Plugin adds gradle tasks for running PMD and FindBugs, and includes a default configuration for these along with Android Lint that is common to most Intrepid Android projects.
 
 ### Usage
 
@@ -36,6 +36,10 @@ To run pmd, use the command `./gradlew pmd`.
 To run FindBugs, use the command `./gradlew findBugs${buildVariant}`. By default, this produces a html result. You can change it to produce a xml report instead by adding `findBugsXml` flag (FindBugs can only produce one type of report at a time).
 ex: `./gradlew findBugsDebug -PfindBugsXml`
 
+Android Lint can be run using the standard `./gradlew findBugs${buildVariant}`
+
+To run all three tasks in a single command, use `./gradlew analyze${buildVariant}`
+
 ### Configuration
 
 The following configurations can be set in the app `build.gradle` to override the default behaviors:
@@ -54,12 +58,15 @@ staticAnalysis {
     findBugsEffort          // default:  "max"
     findBugsReportLevel     // default:  "medium"
     findBugsClasses         // default:  files("${project.buildDir}/intermediates/classes")
-    findBugsExcludeFilter
+    findBugsExcludeFilterFile
+
+    lintAbortOnError        // default:  false
+    lintConfigFile
 }
 ```
 Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
 
-The default `pmdRuleSetFile` and `findBugsExcludeFilter` files can be found [here](src/main/resources).
+The default `pmdRuleSetFile`, `findBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
 
 ### License
 ```

@@ -15,6 +15,9 @@ class StaticAnalysisExtension {
 
     String findBugsEffort = "max"
     String findBugsReportLevel = "medium"
-    String findBugsExcludeFilter
     FileCollection findBugsClasses
+    String findBugsExcludeFilterFile
+
+    boolean lintAbortOnError = false
+    String lintConfigFile
 }

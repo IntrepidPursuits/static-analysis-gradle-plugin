@@ -1,7 +1,9 @@
 package io.intrepid.analysis
 
+import com.android.build.gradle.AndroidConfig
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.internal.file.collections.SimpleFileCollection
 import org.gradle.api.plugins.PluginContainer
 import org.gradle.api.plugins.quality.*
@@ -14,6 +16,9 @@ class StaticAnalysis implements Plugin<Project> {
         project.afterEvaluate {
             createPmdTask(project, extension)
             createFindBugTasks(project, extension)
+            setupLint(project, extension)
+
+            createCombinedTask(project)
         }
     }
 
@@ -57,13 +62,12 @@ class StaticAnalysis implements Plugin<Project> {
         findBugsExtension.toolVersion = extension.findbugsVersion
 
         // Adds a findBugs task for each build variant
-        def variants = getBuildVariants(project)
-        variants.all { bt ->
-            def buildVariant = "${bt.name.capitalize()}"
+        List<String> buildVariants = getBuildVariantNames(project)
+        for (buildVariant in buildVariants) {
             project.task("findBugs$buildVariant", type: FindBugs, dependsOn: "assemble$buildVariant") {
                 doFirst {
-                    if (extension.findBugsExcludeFilter) {
-                        excludeFilter = new File(extension.findBugsExcludeFilter)
+                    if (extension.findBugsExcludeFilterFile) {
+                        excludeFilter = new File(extension.findBugsExcludeFilterFile)
                     } else {
                         excludeFilter = copyResourceFileToBuildDir(project, "/default-findbugs-filter.xml")
                     }
@@ -107,6 +111,41 @@ class StaticAnalysis implements Plugin<Project> {
         }
     }
 
+    private static void setupLint(Project project, StaticAnalysisExtension extension) {
+        def androidConfig = project.extensions.getByType(AndroidConfig)
+        def lintOptions = androidConfig.lintOptions
+
+        lintOptions.abortOnError = extension.lintAbortOnError
+
+        List<String> buildVariants = getBuildVariantNames(project)
+        for (buildVariant in buildVariants) {
+            configureLintVariant(project, extension, buildVariant, lintOptions)
+        }
+
+        // Also setup for the top level "lint" task which runs all variants
+        configureLintVariant(project, extension, "", lintOptions)
+    }
+
+    private static Task configureLintVariant(Project project,
+                                             StaticAnalysisExtension extension,
+                                             String buildVariant,
+                                             lintOptions) {
+        project.tasks.getByName("lint$buildVariant").doFirst {
+            if (extension.lintConfigFile) {
+                lintOptions.lintConfig = new File(extension.lintConfigFile)
+            } else {
+                lintOptions.lintConfig = copyResourceFileToBuildDir(project, "/default-lintConfig.xml")
+            }
+        }
+    }
+
+    private static createCombinedTask(Project project) {
+        List<String> buildVariants = getBuildVariantNames(project)
+        for (buildVariant in buildVariants) {
+            project.task("analyze$buildVariant", dependsOn: ["pmd", "findBugs$buildVariant", "lint$buildVariant"])
+        }
+    }
+
     // Both pmd and findbugs requires a File object for ruleSetFiles and excludeFilter
     // We can't directly create a File object from a resource file in the jar, but we can read it as a stream.
     // So we basically copy the default config files to the build directory and create a file from there
@@ -131,5 +170,10 @@ class StaticAnalysis implements Plugin<Project> {
         } else {
             throw new RuntimeException("The project must use either android or android-library plugin")
         }
+    }
+
+    private static List<String> getBuildVariantNames(Project project) {
+        def variants = getBuildVariants(project)
+        return variants.collect(new ArrayList(), { variant -> "${variant.name.capitalize()}" })
     }
 }
