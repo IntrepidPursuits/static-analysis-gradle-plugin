@@ -24,14 +24,8 @@ buildscript {
     }
 }
 
+// This MUST come after 'com.android.application' or 'com.android.library' plugin
 apply plugin: "io.intrepid.static-analysis"
-```
-
-Or alternatively, if you are using Gradle 2.1+, add the following to the top of your app `build.gradle`:
-```
-plugins {
-    id "io.intrepid.static-analysis" version "1.0.1"
-}
 ```
 
 To run pmd, use the command `./gradlew pmd`.
