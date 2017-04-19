@@ -15,7 +15,7 @@ class StaticAnalysis implements Plugin<Project> {
 
         project.afterEvaluate {
             createPmdTask(project, extension)
-            createFindBugTasks(project, extension)
+            createFindBugsTasks(project, extension)
             setupLint(project, extension)
 
             createCombinedTask(project)
@@ -56,7 +56,7 @@ class StaticAnalysis implements Plugin<Project> {
         }
     }
 
-    private static void createFindBugTasks(Project project, StaticAnalysisExtension extension) {
+    private static void createFindBugsTasks(Project project, StaticAnalysisExtension extension) {
         project.plugins.apply(FindBugsPlugin)
         def findBugsExtension = project.extensions.getByType(FindBugsExtension)
         findBugsExtension.toolVersion = extension.findbugsVersion

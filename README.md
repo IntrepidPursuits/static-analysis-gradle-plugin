@@ -2,6 +2,10 @@
 
 1. [Overview](#overview)
 1. [Usage](#usage)
+1. [Plugin Details](#plugin-details)
+    1. [PMD](#pmd)
+    1. [FindBugs](#findbugs)
+    1. [Android Lint](#android-lint)
 1. [Configuration](#configuration)
 1. [License](#license)
 
@@ -9,7 +13,6 @@
 The Static Analysis Gradle Plugin adds gradle tasks for running PMD and FindBugs, and includes a default configuration for these along with Android Lint that is common to most Intrepid Android projects.
 
 ### Usage
-
 Add the plugin to your project:
 ```
 buildscript {
@@ -36,12 +39,32 @@ To run pmd, use the command `./gradlew pmd`.
 To run FindBugs, use the command `./gradlew findBugs${buildVariant}`. By default, this produces a html result. You can change it to produce a xml report instead by adding `findBugsXml` flag (FindBugs can only produce one type of report at a time).
 ex: `./gradlew findBugsDebug -PfindBugsXml`
 
-Android Lint can be run using the standard `./gradlew findBugs${buildVariant}`
+Android Lint can be run using the standard `./gradlew lint${buildVariant}`
 
 To run all three tasks in a single command, use `./gradlew analyze${buildVariant}`
 
-### Configuration
+### Plugin Details
+Here's a detailed list of changes/additions that Static Analysis Gradle Plugin made to the associated plugins:
 
+#### PMD
+* Sets the default source files to those that are typical in Android projects
+* Changes the default `ignoreFailures` to true
+* Sets a default `ruleSetFile`
+* Enables xml and html reporting
+
+#### FindBugs
+* Creates Gradle task for each of build variants and ensures that these tasks are run after the assembleVariant tasks
+* Sets the default source files and classes to those that are typical in Android projects
+* Changes the default `effort` to max
+* Changes the default `ignoreFailures` to true
+* Sets a default `excludeFilter`
+* Enables xml and html reporting
+
+#### Android Lint
+* Changes the default `abortOnError` flag to false
+* Sets a default `lintConfig` file
+
+### Configuration
 The following configurations can be set in the app `build.gradle` to override the default behaviors:
 
 ```
