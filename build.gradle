@@ -1,0 +1,58 @@
+group 'io.intrepid'
+version '1.0'
+apply plugin: 'maven'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: "com.gradle.plugin-publish"
+
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.3'
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
+    }
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+
+    compile 'com.android.tools.build:gradle:2.3.0'
+}
+
+
+pluginBundle {
+    website = 'https://github.com/IntrepidPursuits/static-analysis-gradle-plugin'
+    vcsUrl = 'https://github.com/IntrepidPursuits/static-analysis-gradle-plugin'
+    description = 'Adds gradle tasks for running PMD and FindBugs, and includes a default configuration that is common to most Intrepid projects.'
+    tags = ['pmd', 'findbugs', 'analysis', 'inspection', 'android']
+
+    plugins {
+        staticAnalysis {
+            id = 'io.intrepid.static-analysis'
+            displayName = 'Android Static Analysis Plugin'
+        }
+    }
+}
+
+// Deploys the artifact locally for testing
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('./repo'))
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<FindBugsFilter>
+
+    <!-- List of bug codes with explanations: http://findbugs.sourceforge.net/bugDescriptions.html -->
+
+    <Match>
+        <Class name="~.*R\$.*"/>
+    </Match>
+    <Match>
+        <Class name="~.*Manifest\$.*"/>
+    </Match>
+    <!--These tends to pop up for Gson/Jackson model classes-->
+    <Match>
+        <Package name="~.*\.models.*"/>
+        <Bug code="UrF"/>
+    </Match>
+    <Match>
+        <Package name="~.*\.models.*"/>
+        <Bug code="UwF"/>
+    </Match>
+    <Match>
+        <Package name="~.*\.models.*"/>
+        <Bug code="UuF"/>
+    </Match>
+</FindBugsFilter>
