@@ -43,6 +43,8 @@ Android Lint can be run using the standard `./gradlew lint${buildVariant}`
 
 To run all three tasks in a single command, use `./gradlew analyze${buildVariant}`
 
+Jenkins note for multi-module projects: If your project has multiple modules, Jenkins must be setup so that lint only runs on the TOP-MOST module in order to avoid duplicate/false lint warnings. For instance, Jenkins can be configured so that `analyze${buildVariant}` can be run on the top level module, but you must separately run pmd and findBugs on all of the lower modules. 
+
 ### Plugin Details
 Here's a detailed list of changes/additions that Static Analysis Gradle Plugin made to the associated plugins:
 
