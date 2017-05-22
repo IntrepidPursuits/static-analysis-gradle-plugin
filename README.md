@@ -20,7 +20,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "gradle.plugin.io.intrepid:static-analysis:1.0"
+        classpath "gradle.plugin.io.intrepid:static-analysis:1.0.1"
     }
 }
 
@@ -30,7 +30,7 @@ apply plugin: "io.intrepid.static-analysis"
 Or alternatively, if you are using Gradle 2.1+, add the following to the top of your app `build.gradle`:
 ```
 plugins {
-    id "io.intrepid.static-analysis" version "1.0"
+    id "io.intrepid.static-analysis" version "1.0.1"
 }
 ```
 
