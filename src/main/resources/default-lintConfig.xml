@@ -141,5 +141,6 @@
     <issue id="InvalidPackage">
         <ignore regexp="okio-.*.jar"/>
         <ignore regexp="retrofit-.*.jar"/>
+	<ignore regexp="requery-.*jar"/>
     </issue>
 </lint>
