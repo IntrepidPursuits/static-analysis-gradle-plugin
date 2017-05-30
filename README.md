@@ -7,6 +7,7 @@
     1. [FindBugs](#findbugs)
     1. [Android Lint](#android-lint)
 1. [Configuration](#configuration)
+1. [Publishing](#publishing)
 1. [License](#license)
 
 ### Overview
@@ -87,6 +88,16 @@ staticAnalysis {
 Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
 
 The default `pmdRuleSetFile`, `findBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
+
+### Publishing
+This project is set to publish to the [Gradle plugins repository](https://plugins.gradle.org/). To publish an update to the plugin, add the following lines to the `gradle.properties` file (either the one in the project directory or `~/.gradle/gradle.properties`):
+```
+gradle.publish.key=#######
+gradle.publish.secret=#######
+```
+and then run `./gradlew publishPlugins`
+
+The key and secret can also be added by running `./gradlew login` command
 
 ### License
 ```
