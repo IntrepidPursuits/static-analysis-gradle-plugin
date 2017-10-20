@@ -117,25 +117,27 @@ class StaticAnalysis implements Plugin<Project> {
 
         lintOptions.abortOnError = extension.lintAbortOnError
 
+        // If lint.xml file does not exist, copy it into the module's top-level directory where Android Studio can find it
+        File lintFile = new File(project.projectDir, "lint.xml")
+        if (!lintFile.exists()) {
+            InputStream input = StaticAnalysis.class.getResourceAsStream("/default-lintConfig.xml")
+            lintFile.text = input.text
+        }
+
         List<String> buildVariants = getBuildVariantNames(project)
         for (buildVariant in buildVariants) {
-            configureLintVariant(project, extension, buildVariant, lintOptions)
+            configureLintVariant(project, buildVariant, lintOptions)
         }
 
         // Also setup for the top level "lint" task which runs all variants
-        configureLintVariant(project, extension, "", lintOptions)
+        configureLintVariant(project, "", lintOptions)
     }
 
     private static Task configureLintVariant(Project project,
-                                             StaticAnalysisExtension extension,
                                              String buildVariant,
                                              lintOptions) {
         project.tasks.getByName("lint$buildVariant").doFirst {
-            if (extension.lintConfigFile) {
-                lintOptions.lintConfig = new File(extension.lintConfigFile)
-            } else {
-                lintOptions.lintConfig = copyResourceFileToBuildDir(project, "/default-lintConfig.xml")
-            }
+            lintOptions.lintConfig = new File("lint.xml")
         }
     }
 

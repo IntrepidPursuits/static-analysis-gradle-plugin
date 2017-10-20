@@ -58,7 +58,6 @@ Here's a detailed list of changes/additions that Static Analysis Gradle Plugin m
 
 #### Android Lint
 * Changes the default `abortOnError` flag to false
-* Sets a default `lintConfig` file
 
 ### Configuration
 The following configurations can be set in the app `build.gradle` to override the default behaviors:
@@ -80,9 +79,10 @@ staticAnalysis {
     findBugsExcludeFilterFile
 
     lintAbortOnError        // default:  false
-    lintConfigFile
 }
 ```
+<b>Please note that if you want to change lint's `abortOnError` setting that you'll need to do it via this value, since it will overwrite any value you put directly into the `lintOptions` block of your build.gradle file.</b>
+
 Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
 
 The default `pmdRuleSetFile`, `findBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
