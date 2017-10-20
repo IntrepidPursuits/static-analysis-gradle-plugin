@@ -4,4 +4,3 @@
 /.gradle
 .DS_store
 /repo
-gradle.properties
