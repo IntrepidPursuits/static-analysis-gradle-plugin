@@ -19,5 +19,4 @@ class StaticAnalysisExtension {
     String findBugsExcludeFilterFile
 
     boolean lintAbortOnError = false
-    String lintConfigFile
 }

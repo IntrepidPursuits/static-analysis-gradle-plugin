@@ -20,7 +20,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "gradle.plugin.io.intrepid:static-analysis:1.0.1"
+        classpath "gradle.plugin.io.intrepid:static-analysis:1.0.2"
     }
 }
 
@@ -58,7 +58,7 @@ Here's a detailed list of changes/additions that Static Analysis Gradle Plugin m
 
 #### Android Lint
 * Changes the default `abortOnError` flag to false
-* Sets a default `lintConfig` file
+* If one does not already exist, this will generate a `lint.xml` file in the project containing the standard rules so we have a common set of checks across all projects.
 
 ### Configuration
 The following configurations can be set in the app `build.gradle` to override the default behaviors:
@@ -80,9 +80,10 @@ staticAnalysis {
     findBugsExcludeFilterFile
 
     lintAbortOnError        // default:  false
-    lintConfigFile
 }
 ```
+<b>Please note that if you want to change any of the settings referenced here (such as lint's `abortOnError`) you'll need to do it via this configuration block, since this plugin will overwrite any properties you set directly in the `lintOptions`, `findbugs`, or `pmd` block(s) of your build.gradle file.</b>
+
 Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
 
 The default `pmdRuleSetFile`, `findBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
