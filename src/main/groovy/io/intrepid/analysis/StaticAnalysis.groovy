@@ -137,7 +137,7 @@ class StaticAnalysis implements Plugin<Project> {
                                              String buildVariant,
                                              lintOptions) {
         project.tasks.getByName("lint$buildVariant").doFirst {
-            lintOptions.lintConfig = new File("lint.xml")
+            lintOptions.lintConfig = new File(project.projectDir, "lint.xml")
         }
     }
 
