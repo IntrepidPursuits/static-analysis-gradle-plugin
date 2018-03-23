@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Version 1.1.0 *(2018-10-20)*
+Version 1.1.0 *(2018-3-23)*
 ----------------------------
 * Changed: Gradle Build Tools has been updated to 3.0.1 and Gradle has been updated to 4.3
 * Changed: `abortOnError` lint option is now defaulted to true
