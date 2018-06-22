@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 1.1.1 *(2018-6-15)*
+----------------------------
+* Changed: Set `GradleDependency` lint rule severity to informational
+
 Version 1.1.0 *(2018-3-23)*
 ----------------------------
 * Changed: Gradle Build Tools has been updated to 3.0.1 and Gradle has been updated to 4.3

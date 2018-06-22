@@ -21,7 +21,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "gradle.plugin.io.intrepid:static-analysis:1.0.3"
+        classpath "gradle.plugin.io.intrepid:static-analysis:1.1.1"
     }
 }
 
@@ -80,7 +80,9 @@ staticAnalysis {
     findBugsClasses         // default:  files("${project.buildDir}/intermediates/classes")
     findBugsExcludeFilterFile
 
-    lintAbortOnError        // default:  false
+    lintAbortOnError        // default:  true
+    lintCheckDependencies   // default:  true
+    lintWarningsAsErrors    // default:  true
 }
 ```
 <b>Please note that if you want to change any of the settings referenced here (such as lint's `abortOnError`) you'll need to do it via this configuration block, since this plugin will overwrite any properties you set directly in the `lintOptions`, `findbugs`, or `pmd` block(s) of your build.gradle file.</b>
