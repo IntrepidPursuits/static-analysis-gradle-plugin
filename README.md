@@ -59,7 +59,7 @@ Here's a detailed list of changes/additions that Static Analysis Gradle Plugin m
 
 #### Android Lint
 * Changes the default `abortOnError` flag to false
-* If one does not already exist, this will generate a `lint.xml` file in the project containing the standard rules so we have a common set of checks across all projects.
+* Lint will use the included [`lintConfig.xml`](src/main/resources/default-lintConfig.xml) ruleset file
 
 ### Configuration
 The following configurations can be set in the app `build.gradle` to override the default behaviors:
@@ -86,6 +86,15 @@ staticAnalysis {
 }
 ```
 <b>Please note that if you want to change any of the settings referenced here (such as lint's `abortOnError`) you'll need to do it via this configuration block, since this plugin will overwrite any properties you set directly in the `lintOptions`, `findbugs`, or `pmd` block(s) of your build.gradle file.</b>
+
+To override specific lint rules, use the lintOptions block, for example:
+```
+lintOptions {
+    ignore "ContentDescription", "SelectableText"
+    warning "SwitchIntDef"
+} 
+```
+**Specifying a different `rules.xml` will not work.**
 
 Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
 
