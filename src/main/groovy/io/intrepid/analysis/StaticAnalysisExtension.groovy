@@ -22,4 +22,5 @@ class StaticAnalysisExtension {
     boolean lintAbortOnError = true
     boolean lintCheckDependencies = true
     boolean lintWarningsAsErrors = true
+    String lintConfigFile
 }
