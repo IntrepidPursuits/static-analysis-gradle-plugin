@@ -1,5 +1,8 @@
 Change Log
 ==========
+Version 1.2.0 *(2018-8-10)*
+----------------------------
+*  Added: `updateLintFile` gradle task to update the project's `lint.xml` to match the library's version. Projects should now specify custom lint rules via `lintOptions` gradle block instead of modifying `lint.xml` so that they don't get overrriden.
 
 Version 1.1.1 *(2018-6-15)*
 ----------------------------
