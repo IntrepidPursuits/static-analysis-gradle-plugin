@@ -21,7 +21,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "gradle.plugin.io.intrepid:static-analysis:1.2.0"
+        classpath "gradle.plugin.io.intrepid:static-analysis:1.2.1"
     }
 }
 

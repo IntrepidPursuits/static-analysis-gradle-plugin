@@ -4,7 +4,6 @@ import com.android.build.gradle.AndroidConfig
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.internal.file.collections.SimpleFileCollection
 import org.gradle.api.plugins.PluginContainer
 import org.gradle.api.plugins.quality.*
 
@@ -50,7 +49,7 @@ class StaticAnalysis implements Plugin<Project> {
                     ruleSetFiles = project.files(extension.pmdRuleSetFile)
                 } else {
                     File file = copyResourceFileToBuildDir(project, "/default-pmd-ruleset.xml")
-                    ruleSetFiles = new SimpleFileCollection(file)
+                    ruleSetFiles = files(file)
                 }
             }
 
@@ -63,12 +62,8 @@ class StaticAnalysis implements Plugin<Project> {
             reports {
                 xml.enabled = true
                 html.enabled = true
-                xml {
-                    destination "$project.buildDir/reports/pmd/pmd.xml"
-                }
-                html {
-                    destination "$project.buildDir/reports/pmd/pmd.html"
-                }
+                xml.destination = new File("$project.buildDir/reports/pmd/pmd.xml")
+                html.destination = new File("$project.buildDir/reports/pmd/pmd.html")
             }
         }
     }
@@ -117,12 +112,8 @@ class StaticAnalysis implements Plugin<Project> {
                         html.enabled = true
                     }
 
-                    xml {
-                        destination "$project.buildDir/reports/findbugs/findbugs.xml"
-                    }
-                    html {
-                        destination "$project.buildDir/reports/findbugs/findbugs.html"
-                    }
+                    xml.destination = new File("$project.buildDir/reports/findbugs/findbugs.xml")
+                    html.destination = new File("$project.buildDir/reports/findbugs/findbugs.html")
                 }
             }
         }
