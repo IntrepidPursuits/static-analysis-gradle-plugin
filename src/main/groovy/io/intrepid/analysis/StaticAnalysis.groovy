@@ -14,12 +14,29 @@ class StaticAnalysis implements Plugin<Project> {
         StaticAnalysisExtension extension = project.extensions.create("staticAnalysis", StaticAnalysisExtension)
 
         project.afterEvaluate {
+            createUpdateLintFileTask(project)
             createPmdTask(project, extension)
             createFindBugsTasks(project, extension)
             setupLint(project, extension)
 
             createCombinedTask(project)
         }
+    }
+
+    private static File lintFile(Project project) {
+        return new File(project.projectDir, "lint.xml")
+    }
+
+    private static void createUpdateLintFileTask(Project project) {
+        project.task("updateLintFile") {
+            updateLintFile(project)
+        }
+    }
+
+    private static void updateLintFile(Project project) {
+        File lintFile = lintFile(project)
+        InputStream input = StaticAnalysis.class.getResourceAsStream("/default-lintConfig.xml")
+        lintFile.text = input.text
     }
 
     private static void createPmdTask(Project project, StaticAnalysisExtension extension) {
@@ -123,10 +140,8 @@ class StaticAnalysis implements Plugin<Project> {
         lintOptions.setBaselineFile(lintBaselineFile)
 
         // If lint.xml file does not exist, copy it into the module's top-level directory where Android Studio can find it
-        File lintFile = new File(project.projectDir, "lint.xml")
-        if (!lintFile.exists()) {
-            InputStream input = StaticAnalysis.class.getResourceAsStream("/default-lintConfig.xml")
-            lintFile.text = input.text
+        if (!lintFile(project).exists()) {
+            updateLintFile(project)
         }
 
         List<String> buildVariants = getBuildVariantNames(project)
@@ -142,7 +157,7 @@ class StaticAnalysis implements Plugin<Project> {
                                              String buildVariant,
                                              lintOptions) {
         project.tasks.getByName("lint$buildVariant").doFirst {
-            lintOptions.lintConfig = new File(project.projectDir, "lint.xml")
+            lintOptions.lintConfig = lintFile(project)
         }
     }
 
