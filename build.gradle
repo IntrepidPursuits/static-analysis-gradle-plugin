@@ -1,5 +1,5 @@
 group 'io.intrepid'
-version '1.2.0'
+version '1.2.1'
 apply plugin: 'maven'
 
 apply plugin: 'groovy'
