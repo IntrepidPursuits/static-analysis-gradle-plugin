@@ -1,5 +1,15 @@
 Change Log
 ==========
+
+Version 1.2.2 *(2019-1-11)*
+----------------------------
+* Changed: Don't automatically create lint baseline file. Projects can manually specify a baseline file in `lintOptions` if they want it. ex: 
+```
+  lintOptions {
+    baseline file("lint-baseline.xml")
+  }
+```
+
 Version 1.2.1 *(2018-12-14)*
 ----------------------------
 *  Fixed: Compatibility issues with Gradle 5.0
