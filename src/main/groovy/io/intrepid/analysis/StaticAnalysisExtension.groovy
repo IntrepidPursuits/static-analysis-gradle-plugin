@@ -18,7 +18,6 @@ class StaticAnalysisExtension {
     FileCollection findBugsClasses
     String findBugsExcludeFilterFile
 
-    String lintBaselineFileName = "lint-baseline.xml"
     boolean lintAbortOnError = true
     boolean lintCheckDependencies = true
     boolean lintWarningsAsErrors = true

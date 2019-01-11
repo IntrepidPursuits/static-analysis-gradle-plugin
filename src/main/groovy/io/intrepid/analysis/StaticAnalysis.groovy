@@ -127,9 +127,6 @@ class StaticAnalysis implements Plugin<Project> {
         lintOptions.checkDependencies = extension.lintCheckDependencies
         lintOptions.warningsAsErrors = extension.lintWarningsAsErrors
 
-        File lintBaselineFile = new File(project.projectDir, extension.lintBaselineFileName)
-        lintOptions.setBaselineFile(lintBaselineFile)
-
         // If lint.xml file does not exist, copy it into the module's top-level directory where Android Studio can find it
         if (!lintFile(project).exists()) {
             updateLintFile(project)
