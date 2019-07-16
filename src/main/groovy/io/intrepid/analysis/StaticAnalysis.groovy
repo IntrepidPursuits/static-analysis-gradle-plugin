@@ -49,7 +49,7 @@ class StaticAnalysis implements Plugin<Project> {
                     ruleSetFiles = project.files(extension.pmdRuleSetFile)
                 } else {
                     File file = copyResourceFileToBuildDir(project, "/default-pmd-ruleset.xml")
-                    ruleSetFiles = files(file)
+                    ruleSetFiles = project.files(file)
                 }
             }
 
