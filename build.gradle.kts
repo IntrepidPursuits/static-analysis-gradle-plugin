@@ -1,6 +1,8 @@
 group = "io.intrepid"
 version = "2.0.0-alpha1"
 
+val pluginId = "io.intrepid.static-analysis"
+
 plugins {
     java
     kotlin("jvm") version "1.3.11"
@@ -40,7 +42,7 @@ dependencies {
 gradlePlugin {
     plugins {
         create("staticAnalysis") {
-            id = "io.intrepid.static-analysis"
+            id = pluginId
             implementationClass = "io.intrepid.analysis.StaticAnalysis"
         }
     }
@@ -55,6 +57,7 @@ pluginBundle {
 
     (plugins) {
         create("staticAnalysis") {
+            id = pluginId
             displayName = "Android Static Analysis Plugin"
         }
     }
