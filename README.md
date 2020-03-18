@@ -72,9 +72,9 @@ staticAnalysis {
     pmdVersion              // default:  "5.5.1"
     findbugsVersion         // default:  "3.0.1"
 
-    source                  // default:  'src'
-    include                 // default:  '**/*.java'
-    exclude                 // default:  '**/gen/**'
+    source                  // default:  "src"
+    include                 // default:  "**/*.java"
+    exclude                 // default:  "**/gen/**"
 
     pmdRuleSetFile
 
