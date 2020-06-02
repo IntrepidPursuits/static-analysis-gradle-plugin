@@ -31,7 +31,7 @@ apply plugin: "io.intrepid.static-analysis"
 
 To run pmd, use the command `./gradlew pmd`.
 
-To run SpotBugs, use the command `./gradlew spotBugs${buildVariant}`. By default, this produces a html result. You can change it to produce a xml report instead by adding `spotBugsXml` flag (FindBugs can only produce one type of report at a time).
+To run SpotBugs, use the command `./gradlew spotBugs${buildVariant}`. By default, this produces a html result. You can change it to produce a xml report instead by adding `spotBugsXml` flag (SpotBugs can only produce one type of report at a time).
 ex: `./gradlew spotBugsDebug -PspotBugsXml`
 
 Android Lint can be run using the standard `./gradlew lint${buildVariant}`
@@ -51,7 +51,7 @@ Here's a detailed list of changes/additions that Static Analysis Gradle Plugin m
 * Sets a default `ruleSetFile`
 * Enables xml and html reporting
 
-#### FindBugs
+#### SpotBugs
 * Creates Gradle task for each of build variants and ensures that these tasks are run after the assembleVariant tasks
 * Sets the default source files and classes to those that are typical in Android projects
 * Changes the default `effort` to max
@@ -90,7 +90,7 @@ staticAnalysis {
 ```
 <b>Please note that if you want to change any of the settings referenced here (such as lint's `abortOnError`) you'll need to do it via this configuration block, since this plugin will overwrite the same properties you set directly in the `lintOptions`, `spotbugs`, or `pmd` block(s) of your build.gradle file.</b>
 
-Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
+Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [SpotBugsPlugin](https://plugins.gradle.org/plugin/com.github.spotbugs) for an explaination of these fields.
 
 The default `pmdRuleSetFile`, `spotBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
 
