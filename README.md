@@ -4,14 +4,14 @@
 1. [Usage](#usage)
 1. [Plugin Details](#plugin-details)
     1. [PMD](#pmd)
-    1. [FindBugs](#findbugs)
+    1. [SpotBugs](#spotbugs)
     1. [Android Lint](#android-lint)
 1. [Configuration](#configuration)
 1. [Publishing](#publishing)
 1. [License](#license)
 
 ### Overview
-The Static Analysis Gradle Plugin adds gradle tasks for running PMD and FindBugs, and includes a default configuration for these along with Android Lint that is common to most Intrepid Android projects.
+The Static Analysis Gradle Plugin adds gradle tasks for running PMD and SpotBugs, and includes a default configuration for these along with Android Lint that is common to most Intrepid Android projects.
 
 ### Usage
 Add the plugin to your project:
@@ -31,8 +31,8 @@ apply plugin: "io.intrepid.static-analysis"
 
 To run pmd, use the command `./gradlew pmd`.
 
-To run FindBugs, use the command `./gradlew findBugs${buildVariant}`. By default, this produces a html result. You can change it to produce a xml report instead by adding `findBugsXml` flag (FindBugs can only produce one type of report at a time).
-ex: `./gradlew findBugsDebug -PfindBugsXml`
+To run SpotBugs, use the command `./gradlew spotBugs${buildVariant}`. By default, this produces a html result. You can change it to produce a xml report instead by adding `spotBugsXml` flag (SpotBugs can only produce one type of report at a time).
+ex: `./gradlew spotBugsDebug -PspotBugsXml`
 
 Android Lint can be run using the standard `./gradlew lint${buildVariant}`
 
@@ -40,7 +40,7 @@ To run all three tasks in a single command, use `./gradlew analyze${buildVariant
 
 When updating the plugin version, it is recommended to run `./gradlew updateLintFile` to sync the project's lint rules with the library.
 
-Note for multi-module projects: You must run lint only on the TOP-MOST module in order to avoid duplicate/false lint warnings. Running lint on the top-most module will run lint on all of the lower modules as well. You must then run pmd and findBugs separately on each lower module in order to get complete coverage. So for example, if you have an app that depends on libraryOne and libraryTwo, to get complete coverage you must run something similar to `./gradlew app:analyzeDebug libraryOne:pmd libraryOne:findBugsDebug libraryTwo:pmd libraryTwo:findBugsDebug`
+Note for multi-module projects: You must run lint only on the TOP-MOST module in order to avoid duplicate/false lint warnings. Running lint on the top-most module will run lint on all of the lower modules as well. You must then run pmd and spotBugs separately on each lower module in order to get complete coverage. So for example, if you have an app that depends on libraryOne and libraryTwo, to get complete coverage you must run something similar to `./gradlew app:analyzeDebug libraryOne:pmd libraryOne:spotBugsDebug libraryTwo:pmd libraryTwo:spotBugsDebug`
 
 ### Plugin Details
 Here's a detailed list of changes/additions that Static Analysis Gradle Plugin made to the associated plugins:
@@ -51,7 +51,7 @@ Here's a detailed list of changes/additions that Static Analysis Gradle Plugin m
 * Sets a default `ruleSetFile`
 * Enables xml and html reporting
 
-#### FindBugs
+#### SpotBugs
 * Creates Gradle task for each of build variants and ensures that these tasks are run after the assembleVariant tasks
 * Sets the default source files and classes to those that are typical in Android projects
 * Changes the default `effort` to max
@@ -70,7 +70,7 @@ The following configurations can be set in the app `build.gradle` to override th
 ```
 staticAnalysis {
     pmdVersion              // default:  "5.5.1"
-    findbugsVersion         // default:  "3.0.1"
+    spotbugsVersion         // default:  "3.0.1"
 
     source                  // default:  "src"
     include                 // default:  "**/*.java"
@@ -78,21 +78,21 @@ staticAnalysis {
 
     pmdRuleSetFile
 
-    findBugsEffort          // default:  "max"
-    findBugsReportLevel     // default:  "medium"
-    findBugsClasses         // default:  files("${project.buildDir}/intermediates/classes")
-    findBugsExcludeFilterFile
+    spotBugsEffort          // default:  "max"
+    spotBugsReportLevel     // default:  "medium"
+    spotBugsClasses         // default:  files("${project.buildDir}/intermediates/classes")
+    spotBugsExcludeFilterFile
 
     lintAbortOnError        // default:  true
     lintCheckDependencies   // default:  true
     lintWarningsAsErrors    // default:  true
 }
 ```
-<b>Please note that if you want to change any of the settings referenced here (such as lint's `abortOnError`) you'll need to do it via this configuration block, since this plugin will overwrite the same properties you set directly in the `lintOptions`, `findbugs`, or `pmd` block(s) of your build.gradle file.</b>
+<b>Please note that if you want to change any of the settings referenced here (such as lint's `abortOnError`) you'll need to do it via this configuration block, since this plugin will overwrite the same properties you set directly in the `lintOptions`, `spotbugs`, or `pmd` block(s) of your build.gradle file.</b>
 
-Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [FindBugsExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html) for an explaination of these fields.
+Refer to the gradle doc for [PmdExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html) and [SpotBugsPlugin](https://plugins.gradle.org/plugin/com.github.spotbugs) for an explaination of these fields.
 
-The default `pmdRuleSetFile`, `findBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
+The default `pmdRuleSetFile`, `spotBugsExcludeFilterFile`, and `lintConfig` files can be found [here](src/main/resources).
 
 Since the library automatically creates `lint.xml` and provides `updateLintFile` gradle task to update it, **projects should not manually modify their `lint.xml`.** Instead, use the `lintOptions` gradle block to override specific rules. For example:
 ```

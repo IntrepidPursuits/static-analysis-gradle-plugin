@@ -9,7 +9,7 @@ plugins {
     `kotlin-dsl`
     id("com.gradle.plugin-publish") version "0.9.7"
     `maven-publish`
-    `java-gradle-plugin`
+    id("com.github.spotbugs") version "4.2.4"
 }
 
 buildscript {
@@ -52,8 +52,8 @@ gradlePlugin {
 pluginBundle {
     website = "https://github.com/IntrepidPursuits/static-analysis-gradle-plugin"
     vcsUrl = "https://github.com/IntrepidPursuits/static-analysis-gradle-plugin"
-    description = "Adds gradle tasks for running PMD and FindBugs, and includes a default configuration that is common to most Intrepid projects."
-    tags = listOf("lint", "pmd", "findbugs", "analysis", "inspection", "android")
+    description = "Adds gradle tasks for running PMD and SpotBugs, and includes a default configuration that is common to most Intrepid projects."
+    tags = listOf("lint", "pmd", "spotbugs", "analysis", "inspection", "android")
 
     (plugins) {
         create("staticAnalysis") {
